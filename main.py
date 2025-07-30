@@ -1,14 +1,13 @@
+import os
 from fastapi import FastAPI
-from signal_logic import generate_crypto_signal
 from stripe_payment import app as stripe_app
+from signal_logic import generate_crypto_signal
 
 app = FastAPI()
-
-# Mount the existing Stripe app at a subpath
 app.mount("/stripe", stripe_app)
 
 @app.get("/")
-def home():
+def root():
     return {"message": "Crypto Signal App Running"}
 
 @app.get("/public-signal")
@@ -22,3 +21,8 @@ def vip():
         "signal": generate_crypto_signal(),
         "message": "You are viewing VIP signals"
     }
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
