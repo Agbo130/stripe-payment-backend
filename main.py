@@ -3,7 +3,13 @@ from signal_logic import generate_crypto_signal
 from stripe_payment import app as stripe_app
 
 app = FastAPI()
-app.mount("/", stripe_app)
+
+# Mount the existing Stripe app at a subpath
+app.mount("/stripe", stripe_app)
+
+@app.get("/")
+def home():
+    return {"message": "Crypto Signal App Running"}
 
 @app.get("/public-signal")
 def public():
