@@ -2,3 +2,7 @@ fastapi
 stripe
 uvicorn
 python-dotenv
+fastapi
+uvicorn
+stripe
+python-dotenv
